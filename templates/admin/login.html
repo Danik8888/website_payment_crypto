@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Вход в админ-панель — FiscalShop{% endblock %}
+{% block content %}
+<div class="admin-login-container">
+    <div class="admin-login-card card">
+        <div class="admin-login-icon">🔐</div>
+        <h1>Вход в админ-панель</h1>
+        <p class="admin-login-subtitle">FiscalShop — Панель управления</p>
+
+        {% if error %}
+        <div class="error-list">
+            <div class="error-item">{{ error }}</div>
+        </div>
+        {% endif %}
+
+        {% if admin_usernames %}
+        <p class="admin-hint">Доступные аккаунты: <strong>{{ admin_usernames }}</strong></p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('admin_login') }}" class="admin-login-form">
+            <div class="form-group">
+                <label for="username">Логин (username без @) *</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Введите username"
+                    required
+                    class="form-control"
+                    autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль *</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Введите пароль"
+                    required
+                    class="form-control"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                🔑 Войти
+            </button>
+        </form>
+
+        <div class="admin-login-footer">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-sm">
+                🏠 На главную
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

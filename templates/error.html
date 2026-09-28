@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Ошибка — FiscalShop{% endblock %}
+{% block content %}
+<div class="error-container">
+    <div class="error-card card">
+        <div class="error-icon">😕</div>
+        <h1>Что-то пошло не так</h1>
+        <p class="error-message">{{ message }}</p>
+        <div class="error-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">🏠 На главную</a>
+            <a href="{{ url_for('support') }}" class="btn btn-secondary">📞 Поддержка</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

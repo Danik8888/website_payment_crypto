@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Оформление заказа — FiscalShop{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>🛒 Оформление заказа</h1>
+    <p>Фискальный накопитель ФН-15 (15 месяцев) — <strong>{{ "{:,}".format(price_rub) }} ₽</strong></p>
+</div>
+
+<div class="order-layout">
+    <div class="order-form-section">
+        <div class="card">
+            <h2>Данные для доставки</h2>
+            
+            {% if errors %}
+            <div class="error-list">
+                {% for error in errors %}
+                    <div class="error-item">❌ {{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('order') }}" class="order-form" id="orderForm">
+                <div class="form-group">
+                    <label for="fullname">ФИО полностью *</label>
+                    <input 
+                        type="text" 
+                        id="fullname" 
+                        name="fullname" 
+                        placeholder="Иванов Иван Иванович"
+                        value="{{ form_data.get('fullname', '') if form_data else '' }}"
+                        required
+                        class="form-control"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Номер телефона *</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="+7 999 123-45-67"
+                        value="{{ form_data.get('phone', '') if form_data else '' }}"
+                        required
+                        class="form-control"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Адрес доставки *</label>
+                    <textarea 
+                        id="address" 
+                        name="address" 
+                        placeholder="Город, улица, дом, квартира"
+                        required
+                        class="form-control"
+                        rows="3"
+                    >{{ form_data.get('address', '') if form_data else '' }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (необязательно)</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="ivanov@example.com"
+                        value="{{ form_data.get('email', '') if form_data else '' }}"
+                        class="form-control"
+                    >
+                </div>
+
+                <div class="form-info">
+                    <p>💳 Оплата: <strong>Bitcoin (BTC)</strong></p>
+                    <p>💰 Цена: <strong>{{ "{:,}".format(price_rub) }} ₽</strong> (автоконвертация по курсу)</p>
+                    <p>📦 Доставка по всей России</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    💰 Перейти к оплате
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="order-info-section">
+        <div class="card card-info">
+            <h3>📋 Что вы получите</h3>
+            <ul class="info-list">
+                <li>✅ Фискальный накопитель ФН-15</li>
+                <li>✅ Срок действия: 15 месяцев</li>
+                <li>✅ Официальная гарантия</li>
+                <li>✅ Доставка по всей РФ</li>
+                <li>✅ Поддержка по всем вопросам</li>
+            </ul>
+        </div>
+
+        <div class="card card-info">
+            <h3>🪙 Как оплатить Bitcoin</h3>
+            <ol class="info-list">
+                <li>Заполните форму заказа</li>
+                <li>Получите уникальный BTC-адрес</li>
+                <li>Отправьте точную сумму с кошелька</li>
+                <li>Дождитесь подтверждения (10-30 мин)</li>
+            </ol>
+        </div>
+
+        <div class="card card-info card-warning">
+            <h3>⚠️ Важно</h3>
+            <ul class="info-list">
+                <li>Отправляйте <strong>точную сумму</strong> на указанный адрес</li>
+                <li>Средства поступают после 1-2 подтверждений сети</li>
+                <li>Адрес генерируется <strong>уникальный</strong> для каждого заказа</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

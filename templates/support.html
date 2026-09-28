@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Поддержка — FiscalShop{% endblock %}
+{% block content %}
+<div class="support-container">
+    <div class="support-header">
+        <h1>📞 Поддержка</h1>
+        <p>Если у вас возникли вопросы, мы всегда готовы помочь.</p>
+    </div>
+
+    <div class="support-grid">
+        <div class="card support-card">
+            <div class="support-card-icon">💬</div>
+            <h2>Telegram</h2>
+            <p>Свяжитесь с нами напрямую через Telegram:</p>
+            <a href="{{ support_link }}" class="btn btn-primary btn-lg" target="_blank">
+                📱 @{{ support_username }}
+            </a>
+        </div>
+
+        <div class="card support-card">
+            <div class="support-card-icon">❓</div>
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Как оплатить Bitcoin?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>После оформления заказа вы получите уникальный Bitcoin-адрес. Отправьте на него точную сумму в BTC с любого кошелька. Средства поступят в течение 10-30 минут после подтверждения транзакции сетью.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Сколько ждать доставку?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Доставка по России обычно занимает 3-7 рабочих дней после подтверждения оплаты. Отправляем через СДЭК или Почту России.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Есть ли гарантия?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да, на все фискальные накопители предоставляется официальная гарантия производителя 12 месяцев.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Можно ли вернуть товар?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Да, вы можете вернуть товар в течение 14 дней с момента получения, если он не был в использовании и сохранена упаковка.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card support-card">
+            <div class="support-card-icon">ℹ️</div>
+            <h2>Информация</h2>
+            <ul class="info-list">
+                <li>🕐 Работаем ежедневно с 10:00 до 20:00 по МСК</li>
+                <li>📦 Отправляем заказы в день подтверждения оплаты</li>
+                <li>🔒 Все данные защищены</li>
+                <li>₿ Принимаем Bitcoin (BTC)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

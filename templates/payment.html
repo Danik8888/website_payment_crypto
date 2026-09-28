@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Оплата заказа #{{ order.order_id }} — FiscalShop{% endblock %}
+{% block content %}
+<div class="payment-container">
+    <div class="payment-header">
+        <div class="payment-status-badge pending">⏳ Ожидает оплаты</div>
+        <h1>Заказ #{{ order.order_id }}</h1>
+        <p class="payment-date">Создан: {{ order.date }}</p>
+    </div>
+
+    <div class="payment-grid">
+        <!-- Информация о заказе -->
+        <div class="payment-info card">
+            <h2>📋 Детали заказа</h2>
+            <div class="order-details">
+                <div class="detail-row">
+                    <span class="detail-label">ФИО</span>
+                    <span class="detail-value">{{ order.fullname }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Телефон</span>
+                    <span class="detail-value">{{ order.phone }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Адрес</span>
+                    <span class="detail-value">{{ order.address }}</span>
+                </div>
+                {% if order.email %}
+                <div class="detail-row">
+                    <span class="detail-label">Email</span>
+                    <span class="detail-value">{{ order.email }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Счет на оплату -->
+        <div class="payment-invoice card card-accent">
+            <h2>💰 Счет на оплату</h2>
+            
+            <div class="invoice-amounts">
+                <div class="amount-row rub">
+                    <span class="amount-label">Сумма в рублях</span>
+                    <span class="amount-value">{{ "{:,}".format(order.price_rub) }} ₽</span>
+                </div>
+                <div class="amount-row rate">
+                    <span class="amount-label">Курс BTC/RUB</span>
+                    <span class="amount-value">1 BTC = {{ "{:,.2f}".format(order.btc_rate) }} ₽</span>
+                </div>
+                <div class="amount-row btc">
+                    <span class="amount-label">К оплате</span>
+                    <span class="amount-value btc-amount">{{ "{:.8f}".format(order.btc_amount) }} BTC</span>
+                </div>
+                <div class="amount-row sats">
+                    <span class="amount-label">В сатоши</span>
+                    <span class="amount-value">{{ "{:,}".format(order.sats) }} сатоши</span>
+                </div>
+            </div>
+
+            <div class="btc-address-section">
+                <h3>📌 Отправьте ровно <strong>{{ "{:.8f}".format(order.btc_amount) }} BTC</strong> на адрес:</h3>
+                <div class="btc-address-box">
+                    <code id="btcAddress">{{ order.btc_address }}</code>
+                    <button class="btn btn-small" onclick="copyAddress()" id="copyBtn">
+                        📋 Копировать
+                    </button>
+                </div>
+                <p class="address-warning">
+                    ⚠️ Адрес генерируется индивидуально для каждого заказа.
+                    Отправляйте <strong>точную сумму</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Проверка оплаты -->
+        <div class="payment-check card">
+            <h2>🔄 Проверка оплаты</h2>
+            <p class="check-text">После отправки Bitcoin нажмите кнопку для проверки:</p>
+            
+            <button class="btn btn-primary btn-block btn-lg" onclick="checkPayment()" id="checkBtn">
+                🔄 Проверить оплату
+            </button>
+
+            <div id="paymentResult" class="payment-result" style="display: none;">
+                <div id="paymentSpinner" class="spinner" style="display: none;">
+                    <div class="spinner-icon">⏳</div>
+                    <p>Проверяем оплату...</p>
+                </div>
+                <div id="paymentSuccess" class="result-box result-success" style="display: none;">
+                    <div class="result-icon">✅</div>
+                    <h3>Оплата получена!</h3>
+                    <p id="successMessage">Спасибо за покупку! Мы свяжемся с вами для подтверждения доставки.</p>
+                    <a href="{{ url_for('success', order_id=order.order_id) }}" class="btn btn-primary">
+                        📋 Посмотреть детали заказа
+                    </a>
+                </div>
+                <div id="paymentPending" class="result-box result-pending" style="display: none;">
+                    <div class="result-icon">⏳</div>
+                    <h3>Оплата еще не поступила</h3>
+                    <div id="paymentDetails" class="payment-details">
+                        <p>Требуется: <strong id="requiredAmount">{{ "{:,}".format(order.sats) }}</strong> сатоши</p>
+                        <p>Получено: <strong id="receivedAmount">0</strong> сатоши</p>
+                    </div>
+                    <p class="pending-hint">⏱️ Попробуйте проверить через несколько минут.</p>
+                    <button class="btn btn-primary" onclick="checkPayment()">
+                        🔄 Проверить снова
+                    </button>
+                </div>
+                <div id="paymentError" class="result-box result-error" style="display: none;">
+                    <div class="result-icon">❌</div>
+                    <h3>Ошибка проверки</h3>
+                    <p id="errorMessage"></p>
+                    <button class="btn btn-primary" onclick="checkPayment()">
+                        🔄 Попробовать снова
+                    </button>
+                </div>
+            </div>
+
+            <!-- Автопроверка каждые 30 секунд -->
+            <div class="auto-check-info" id="autoCheckInfo">
+                <p>🔄 Автоматическая проверка каждые 30 секунд</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-help card">
+        <h3>💡 Нужна помощь?</h3>
+        <p>Если у вас возникли вопросы по оплате, обратитесь в <a href="{{ url_for('support') }}">поддержку</a>.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Данные заказа для JavaScript
+const ORDER_ID = "{{ order.order_id }}";
+const BTC_ADDRESS = "{{ order.btc_address }}";
+const REQUIRED_SATS = {{ order.sats }};
+</script>
+<script src="{{ url_for('static', filename='payment.js') }}"></script>
+{% endblock %}

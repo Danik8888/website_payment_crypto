@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}FiscalShop — Магазин фискальных накопителей{% endblock %}
+{% block content %}
+<!-- Hero секция -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">🔥 Официальная гарантия</div>
+        <h1 class="hero-title">
+            Фискальные накопители
+            <span class="hero-accent">с оплатой в Bitcoin</span>
+        </h1>
+        <p class="hero-subtitle">
+            Купите фискальный накопитель ФН-15 (15 месяцев) с доставкой по всей России.
+            Оплата в Bitcoin по актуальному курсу.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('order') }}" class="btn btn-primary btn-lg">
+                🛒 Купить сейчас
+            </a>
+            <a href="{{ url_for('support') }}" class="btn btn-secondary btn-lg">
+                📞 Связаться с поддержкой
+            </a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-card">
+            <div class="hero-card-icon">💳</div>
+            <div class="hero-card-info">
+                <span class="hero-card-label">Цена</span>
+                <span class="hero-card-value">{{ "{:,}".format(price_rub) }} ₽</span>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-card-icon">₿</div>
+            <div class="hero-card-info">
+                <span class="hero-card-label">Оплата</span>
+                <span class="hero-card-value">Bitcoin</span>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-card-icon">📦</div>
+            <div class="hero-card-info">
+                <span class="hero-card-label">Доставка</span>
+                <span class="hero-card-value">По всей РФ</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="features">
+    <h2 class="section-title">Почему выбирают нас?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3>Официальная гарантия</h3>
+            <p>Все фискальные накопители сертифицированы и имеют официальную гарантию производителя.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">₿</div>
+            <h3>Оплата Bitcoin</h3>
+            <p>Принимаем Bitcoin по актуальному курсу. Цена фиксирована в рублях, конвертация автоматическая.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🚚</div>
+            <h3>Доставка по России</h3>
+            <p>Отправляем заказы во все регионы РФ. Быстрая и надежная доставка.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Безопасность</h3>
+            <p>Ваши данные защищены. Платежи проходят напрямую через Bitcoin Core.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Как это работает -->
+<section class="how-it-works">
+    <h2 class="section-title">Как это работает</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Оформите заказ</h3>
+            <p>Заполните форму: телефон, адрес доставки и ФИО.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Получите счет</h3>
+            <p>Мы сгенерируем уникальный Bitcoin-адрес для оплаты.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Оплатите Bitcoin</h3>
+            <p>Отправьте точную сумму в BTC на указанный адрес.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>Получите товар</h3>
+            <p>После подтверждения оплаты мы отправим заказ.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2>Готовы сделать заказ?</h2>
+        <p>Цена: <strong>{{ "{:,}".format(price_rub) }} ₽</strong> по актуальному курсу Bitcoin</p>
+        <a href="{{ url_for('order') }}" class="btn btn-primary btn-lg">
+            🛒 Оформить заказ
+        </a>
+    </div>
+</section>
+{% endblock %}

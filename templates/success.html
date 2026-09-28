@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Заказ #{{ order.order_id }} оплачен — FiscalShop{% endblock %}
+{% block content %}
+<div class="success-container">
+    <div class="success-card card">
+        <div class="success-icon">🎉</div>
+        <h1>Оплата получена!</h1>
+        <p class="success-subtitle">Спасибо за покупку, {{ order.fullname }}!</p>
+        
+        <div class="success-details">
+            <h2>📋 Детали заказа #{{ order.order_id }}</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="detail-label">ФИО</span>
+                    <span class="detail-value">{{ order.fullname }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Телефон</span>
+                    <span class="detail-value">{{ order.phone }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Адрес</span>
+                    <span class="detail-value">{{ order.address }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Дата заказа</span>
+                    <span class="detail-value">{{ order.date }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Сумма</span>
+                    <span class="detail-value">{{ "{:.8f}".format(order.btc_amount) }} BTC</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">BTC адрес</span>
+                    <span class="detail-value address-value"><code>{{ order.btc_address }}</code></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-actions">
+            <p>📞 Мы свяжемся с вами в ближайшее время для подтверждения доставки.</p>
+            <div class="success-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">🏠 На главную</a>
+                <a href="{{ url_for('support') }}" class="btn btn-secondary">📞 Поддержка</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

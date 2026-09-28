@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Очистить заказы — Админ панель — FiscalShop{% endblock %}
+{% block content %}
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="admin-header-top">
+            <h1>🗑️ Очистить заказы</h1>
+            <span class="admin-user">👤 {{ admin_username }}</span>
+        </div>
+        <div class="admin-nav">
+            <a href="{{ url_for('admin_orders') }}" class="admin-nav-link">📋 Заказы</a>
+            <a href="{{ url_for('admin_stats') }}" class="admin-nav-link">📊 Статистика</a>
+            <a href="{{ url_for('admin_clear') }}" class="admin-nav-link active">🗑️ Очистить заказы</a>
+            <a href="{{ url_for('admin_logout') }}" class="admin-nav-link">🔓 Выйти</a>
+        </div>
+    </div>
+
+    <div class="admin-clear-card card card-warning">
+        <div class="admin-clear-icon">⚠️</div>
+        <h2>Очистка истории заказов</h2>
+        <p class="admin-clear-text">
+            Вы уверены, что хотите удалить <strong>все заказы</strong>?
+        </p>
+        <p class="admin-clear-warning">
+            ⚠️ Это действие <strong>нельзя отменить</strong>. Будут удалены:
+        </p>
+        <ul class="admin-clear-list">
+            <li>📄 Все заказы из <code>orders.txt</code></li>
+            <li>📁 Все файлы из папки <code>users_data/</code></li>
+            <li>📊 Вся статистика</li>
+        </ul>
+
+        <form method="POST" action="{{ url_for('admin_clear') }}" class="admin-clear-form">
+            <div class="admin-clear-actions">
+                <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Вы уверены? Это действие нельзя отменить!')">
+                    🗑️ Да, удалить все заказы
+                </button>
+                <a href="{{ url_for('admin_orders') }}" class="btn btn-secondary btn-lg">
+                    🔙 Назад к заказам
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

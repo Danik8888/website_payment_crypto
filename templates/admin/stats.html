@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Статистика — Админ панель — FiscalShop{% endblock %}
+{% block content %}
+<div class="admin-container">
+    <div class="admin-header">
+        <div class="admin-header-top">
+            <h1>📊 Статистика</h1>
+            <span class="admin-user">👤 {{ admin_username }}</span>
+        </div>
+        <div class="admin-nav">
+            <a href="{{ url_for('admin_orders') }}" class="admin-nav-link">📋 Заказы</a>
+            <a href="{{ url_for('admin_stats') }}" class="admin-nav-link active">📊 Статистика</a>
+            <a href="{{ url_for('admin_clear') }}" class="admin-nav-link">🗑️ Очистить заказы</a>
+            <a href="{{ url_for('admin_logout') }}" class="admin-nav-link">🔓 Выйти</a>
+        </div>
+    </div>
+
+    <div class="admin-stats-grid">
+        <div class="stat-card card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-value">{{ total }}</div>
+            <div class="stat-label">Всего заказов</div>
+        </div>
+        <div class="stat-card card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">{{ paid }}</div>
+            <div class="stat-label">Оплачено</div>
+        </div>
+        <div class="stat-card card">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value">{{ pending }}</div>
+            <div class="stat-label">Ожидают оплаты</div>
+        </div>
+        <div class="stat-card card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">{{ "{:,}".format(total_rub) }} ₽</div>
+            <div class="stat-label">Выручка</div>
+        </div>
+    </div>
+
+    <div class="admin-stats-details card">
+        <h2>📈 Детали</h2>
+        <div class="stat-detail-row">
+            <span class="stat-detail-label">Всего заказов:</span>
+            <span class="stat-detail-value">{{ total }}</span>
+        </div>
+        <div class="stat-detail-row">
+            <span class="stat-detail-label">Оплачено:</span>
+            <span class="stat-detail-value">{{ paid }}</span>
+        </div>
+        <div class="stat-detail-row">
+            <span class="stat-detail-label">Ожидают оплаты:</span>
+            <span class="stat-detail-value">{{ pending }}</span>
+        </div>
+        <div class="stat-detail-row">
+            <span class="stat-detail-label">Выручка (оплаченные):</span>
+            <span class="stat-detail-value">{{ "{:,}".format(total_rub) }} ₽</span>
+        </div>
+        <div class="stat-detail-row">
+            <span class="stat-detail-label">Средний чек:</span>
+            <span class="stat-detail-value">
+                {% if paid > 0 %}
+                    {{ "{:,}".format(total_rub // paid) }} ₽
+                {% else %}
+                    —
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}
